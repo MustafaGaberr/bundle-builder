@@ -1,6 +1,5 @@
 .step {
-  border-top: 1px solid var(--color-border-strong);
-  border-bottom: 1px solid var(--color-border-strong);
+  border: 0;
 }
 
 .open {
@@ -11,14 +10,31 @@
 }
 
 .eyebrow {
+  display: block;
   height: 15px;
   padding: 0 15px;
   color: #484848;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: var(--font-weight-medium);
   letter-spacing: 1.6px;
-  line-height: 12px;
+  line-height: 1;
   text-transform: uppercase;
+}
+
+.open .eyebrow {
+  height: 32px;
+  padding-top: 15px;
+  border-bottom: 0.5px solid var(--color-border-strong);
+}
+
+.headerButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 0;
+  text-align: left;
 }
 
 .header {
@@ -28,15 +44,28 @@
   width: 100%;
   min-height: 66px;
   padding: 20px 15px;
-  color: var(--color-text-primary);
-  background: transparent;
-  border: 0;
-  text-align: left;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.step:not(.open) .header {
+  margin-top: 5px;
+  border-top: 0.5px solid var(--color-border-strong);
+  border-bottom: 0.5px solid var(--color-border-strong);
+}
+
+.step:not(.open) .headerButton:hover .header {
+  background: rgba(78, 47, 210, 0.04);
+  box-shadow: inset 3px 0 0 rgba(78, 47, 210, 0.32);
+  transform: translateX(2px);
 }
 
 .open .header {
-  min-height: 46px;
-  padding-bottom: 0;
+  min-height: 61px;
+  padding-top: 5px;
+  padding-bottom: 15px;
 }
 
 .headingGroup,
@@ -53,7 +82,7 @@
 .meta {
   flex: 0 0 auto;
   gap: 8px;
-  color: var(--color-text-primary);
+  color: var(--color-primary);
   font-size: 14px;
   font-weight: var(--font-weight-medium);
   line-height: 16px;
@@ -69,7 +98,7 @@
   color: var(--color-text-primary);
   font-size: 22px;
   font-weight: var(--font-weight-semibold);
-  line-height: 26px;
+  line-height: 1;
 }
 
 .chevron {
@@ -82,7 +111,7 @@
 }
 
 .body {
-  padding: 15px 15px 20px;
+  padding: 15px 15px 19px;
 }
 
 @media (max-width: 640px) {
