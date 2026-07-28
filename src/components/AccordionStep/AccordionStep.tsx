@@ -24,21 +24,23 @@ export function AccordionStep({
 
   return (
     <section className={isOpen ? `${styles.step} ${styles.open}` : styles.step}>
-      <div className={styles.eyebrow}>{step.eyebrowLabel}</div>
       <button
-        className={styles.header}
+        className={styles.headerButton}
         type="button"
         onClick={onOpen}
         aria-expanded={isOpen}
         aria-controls={bodyId}
       >
-        <span className={styles.headingGroup}>
-          <img className={styles.icon} src={step.iconPath} alt="" />
-          <span className={styles.title}>{step.title}</span>
-        </span>
-        <span className={styles.meta}>
-          {selectedCount > 0 ? <span>{selectedCount} selected</span> : null}
-          <img className={styles.chevron} src={chevronPath} alt="" />
+        <span className={styles.eyebrow}>{step.eyebrowLabel}</span>
+        <span className={styles.header}>
+          <span className={styles.headingGroup}>
+            <img className={styles.icon} src={step.iconPath} alt="" />
+            <span className={styles.title}>{step.title}</span>
+          </span>
+          <span className={styles.meta}>
+            {selectedCount > 0 ? <span>{selectedCount} selected</span> : null}
+            <img className={styles.chevron} src={chevronPath} alt="" />
+          </span>
         </span>
       </button>
       {isOpen ? (

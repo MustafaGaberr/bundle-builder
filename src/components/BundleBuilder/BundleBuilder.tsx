@@ -16,7 +16,7 @@ type BundleBuilderProps = {
   state: BundleState
   reviewSections: ReviewSections
   getDistinctSelectedCountByCategory: (categoryId: string) => number
-  setActiveStep: (stepId: string) => void
+  setActiveStep: (stepId: string | null) => void
   setActiveVariant: (productId: ProductId, variantId: VariantId) => void
   incrementQuantity: (selectionKey: SelectionKey) => void
   decrementQuantity: (selectionKey: SelectionKey) => void
@@ -57,7 +57,7 @@ export function BundleBuilder({
             isOpen={isOpen}
             selectedCount={getDistinctSelectedCountByCategory(step.categoryId)}
             chevronPath={isOpen ? chevronUpPath : chevronDownPath}
-            onOpen={() => setActiveStep(step.id)}
+            onOpen={() => setActiveStep(isOpen ? null : step.id)}
           >
             {step.categoryId === 'cameras' ? (
               <CameraStep

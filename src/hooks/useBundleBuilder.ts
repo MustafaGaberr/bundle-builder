@@ -53,7 +53,7 @@ const restoreBundleState = (): BundleState => {
     const storedState: StoredBundleState = parsedValue
     let restoredState = initialState
 
-    if (typeof storedState.activeStepId === 'string') {
+    if (storedState.activeStepId === null || typeof storedState.activeStepId === 'string') {
       restoredState = bundleReducer(restoredState, {
         type: 'set-active-step',
         stepId: storedState.activeStepId,
@@ -125,7 +125,7 @@ export const useBundleBuilder = () => {
     return selectDistinctSelectedProductCountByCategory(catalog, state, categoryId)
   }
 
-  const setActiveStep = (stepId: StepId): void => {
+  const setActiveStep = (stepId: StepId | null): void => {
     dispatch({ type: 'set-active-step', stepId })
   }
 

@@ -7,7 +7,7 @@ import type {
 } from '../types/bundle'
 
 export type BundleState = {
-  activeStepId: StepId
+  activeStepId: StepId | null
   activeVariantByProduct: Partial<Record<ProductId, VariantId>>
   quantities: Partial<Record<SelectionKey, number>>
   selectedPlanId: string

@@ -6,7 +6,7 @@ import type { BundleState } from './bundleState'
 export type BundleAction =
   | {
       type: 'set-active-step'
-      stepId: StepId
+      stepId: StepId | null
     }
   | {
       type: 'set-active-variant'
@@ -123,6 +123,17 @@ export const createBundleReducer = (catalog: BundleCatalog): BundleReducer => {
   return (state: BundleState, action: BundleAction): BundleState => {
     switch (action.type) {
       case 'set-active-step':
+        if (action.stepId === null) {
+          if (state.activeStepId === null) {
+            return state
+          }
+
+          return {
+            ...state,
+            activeStepId: null,
+          }
+        }
+
         if (!isValidStepId(catalog, action.stepId) || state.activeStepId === action.stepId) {
           return state
         }
