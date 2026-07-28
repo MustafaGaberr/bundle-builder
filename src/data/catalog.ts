@@ -4,11 +4,19 @@ import type { BundleCatalog } from '../types/bundle'
 
 const rawCatalog: BundleCatalog = rawBundleCatalog
 
-const assetUrls = import.meta.glob<string>('../assets/**/*.{png,svg}', {
-  eager: true,
-  import: 'default',
-  query: '?url',
-})
+const assetUrls = import.meta.glob<string>(
+  [
+    '../assets/badges/**/*.{png,svg}',
+    '../assets/icons/**/*.{png,svg}',
+    '../assets/products/**/*.{png,svg}',
+    '../assets/variants/**/*.{png,svg}',
+  ],
+  {
+    eager: true,
+    import: 'default',
+    query: '?url',
+  },
+)
 
 const toGlobKey = (assetPath: string): string => assetPath.replace(/^src\/assets\//, '../assets/')
 
