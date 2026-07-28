@@ -18,28 +18,91 @@
   width: 20px;
   height: 20px;
   padding: 0;
-  color: var(--color-text-primary);
+  color: #525963;
   background: var(--color-control-background);
-  border: 1px solid var(--color-border-light);
+  border: 0;
   border-radius: var(--radius-control);
   font-size: 16px;
   font-weight: var(--font-weight-semibold);
   line-height: 1;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.decrementButton {
+  color: #525963;
+  background: var(--color-control-background);
+  border: 0;
+}
+
+.incrementButton {
+  color: #525963;
+  background: var(--color-control-background);
 }
 
 .button:disabled {
-  color: var(--color-text-subtle);
+  color: #575757;
   background: var(--color-disabled-background);
-  border-color: var(--color-border-default);
+  border: 1px solid var(--color-border-default);
+  box-shadow: none;
+  transform: none;
 }
 
-.button img {
+.button:not(:disabled):hover {
+  color: #ffffff;
+  background: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(78, 47, 210, 0.18);
+  transform: translateY(-1px);
+}
+
+.stepper:not(.compact) .decrementButton:disabled {
+  color: var(--color-border-default);
+  background: #ffffff;
+  border: 2px solid var(--color-border-light);
+}
+
+.icon {
+  display: block;
+  background: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.minusIcon {
+  width: 8px;
+  height: 1.6px;
+  mask-image: url("../../assets/icons/minus.svg");
+  -webkit-mask-image: url("../../assets/icons/minus.svg");
+}
+
+.plusIcon {
   width: 8px;
   height: 8px;
+  mask-image: url("../../assets/icons/plus.svg");
+  -webkit-mask-image: url("../../assets/icons/plus.svg");
 }
 
-.button:disabled img {
-  opacity: 0.45;
+.button:disabled .icon {
+  opacity: 1;
+}
+
+.compact .button {
+  color: #575757;
+  background: #ffffff;
+  border: 0;
+}
+
+.compact .button:disabled {
+  color: #575757;
+  background: var(--color-disabled-background);
+  border: 1px solid var(--color-border-default);
 }
 
 .quantity {

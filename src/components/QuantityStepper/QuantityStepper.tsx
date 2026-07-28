@@ -1,5 +1,3 @@
-import minusPath from '../../assets/icons/minus.svg'
-import plusPath from '../../assets/icons/plus.svg'
 import styles from './QuantityStepper.module.css'
 
 type QuantityStepperProps = {
@@ -19,30 +17,29 @@ export function QuantityStepper({
   ariaLabel,
   compact = false,
 }: QuantityStepperProps) {
+  const stepperClassName = [styles.stepper, compact ? styles.compact : ''].filter(Boolean).join(' ')
+
   return (
-    <div
-      className={compact ? `${styles.stepper} ${styles.compact}` : styles.stepper}
-      aria-label={ariaLabel}
-    >
+    <div className={stepperClassName} aria-label={ariaLabel}>
       <button
-        className={styles.button}
+        className={`${styles.button} ${styles.decrementButton}`}
         type="button"
         onClick={onDecrement}
         disabled={decrementDisabled}
         aria-label={`Decrease ${ariaLabel}`}
       >
-        <img src={minusPath} alt="" aria-hidden="true" />
+        <span className={`${styles.icon} ${styles.minusIcon}`} aria-hidden="true" />
       </button>
       <span className={styles.quantity} aria-live="polite">
         {quantity}
       </span>
       <button
-        className={styles.button}
+        className={`${styles.button} ${styles.incrementButton}`}
         type="button"
         onClick={onIncrement}
         aria-label={`Increase ${ariaLabel}`}
       >
-        <img src={plusPath} alt="" aria-hidden="true" />
+        <span className={`${styles.icon} ${styles.plusIcon}`} aria-hidden="true" />
       </button>
     </div>
   )

@@ -1,6 +1,9 @@
 .panel {
+  display: flex;
   align-self: start;
   width: var(--layout-review-width);
+  min-height: 855px;
+  flex-direction: column;
   background: var(--color-panel-background);
   border-radius: var(--radius-card);
 }
@@ -20,15 +23,18 @@
   display: flex;
   width: 390px;
   max-width: 100%;
+  flex: 1;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px 20px 24px;
+  gap: 0;
+  padding: 20px 20px 14px;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-bottom: 14px;
+  letter-spacing: 0.6px;
 }
 
 .header h2,
@@ -57,7 +63,7 @@
 .sections {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
 }
 
 .reviewSection {
@@ -65,7 +71,12 @@
   flex-direction: column;
   gap: 8px;
   padding-top: 15px;
+  padding-bottom: 10px;
   border-top: 1px solid var(--color-border-default);
+}
+
+.reviewSection:last-child {
+  padding-bottom: 0;
 }
 
 .reviewSection h3 {
@@ -80,20 +91,37 @@
 .reviewLines {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .reviewLine {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) 72px 49px;
+  gap: 9px;
   align-items: center;
+  min-height: 41px;
+}
+
+.planLine {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.planLine .linePrice {
+  grid-column: 2;
+}
+
+.shippingLine {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.shippingLine .linePrice {
+  grid-column: 2;
 }
 
 .itemMain {
   display: flex;
   min-width: 0;
-  gap: 12px;
+  gap: 11px;
   align-items: center;
 }
 
@@ -113,6 +141,19 @@
   object-fit: contain;
 }
 
+.planThumbnail {
+  flex-basis: 20px;
+  width: 20px;
+  height: 24px;
+  background: transparent;
+  border-radius: 0;
+}
+
+.planThumbnail img {
+  width: 20px;
+  height: 24px;
+}
+
 .itemText {
   min-width: 0;
 }
@@ -121,22 +162,25 @@
   color: var(--color-text-primary);
   font-size: 14px;
   font-weight: var(--font-weight-medium);
+  letter-spacing: 0.07px;
   line-height: 16px;
 }
 
 .itemText span {
-  display: inline-block;
+  display: block;
   color: var(--color-text-muted);
   font-size: 12px;
-  line-height: 14px;
+  letter-spacing: 0.07px;
+  line-height: 13px;
 }
 
 .linePrice {
   display: flex;
-  min-width: 45px;
+  min-width: 49px;
   flex-direction: column;
   align-items: flex-end;
   font-size: 14px;
+  letter-spacing: 0.07px;
   line-height: 16px;
   text-align: right;
   white-space: nowrap;
@@ -154,12 +198,17 @@
 
 .summary {
   display: flex;
+  min-height: 78px;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
-  padding-top: 12px;
+  gap: 16px;
+  margin-top: auto;
+  margin-bottom: 14px;
+  padding-top: 9px;
 }
 
 .badge {
+  flex: 0 0 auto;
   width: 78px;
   height: 78px;
   object-fit: contain;
@@ -167,34 +216,38 @@
 
 .totals {
   display: flex;
-  flex: 1;
+  width: 145px;
   flex-direction: column;
   align-items: flex-end;
-  gap: 8px;
 }
 
 .financing {
-  padding: 5px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 113px;
+  height: 18px;
+  margin-top: 10px;
+  padding: 0 4px;
+  overflow: hidden;
   color: #ffffff;
   background: var(--color-primary);
   border-radius: 2px;
-  font-size: 8px;
-  font-weight: var(--font-weight-semibold);
-  line-height: 1;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.6px;
+  line-height: normal;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .totalRow {
   display: flex;
-  width: 100%;
+  width: 145px;
+  height: 32px;
+  margin-top: 8px;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.totalLabel {
-  color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: var(--font-weight-medium);
+  justify-content: flex-end;
 }
 
 .totalPrices {
@@ -206,6 +259,7 @@
 .totalCompareAt {
   color: var(--color-text-muted);
   font-size: 16px;
+  line-height: 20px;
   text-decoration: line-through;
 }
 
@@ -213,18 +267,23 @@
   color: var(--color-primary);
   font-size: 24px;
   font-weight: var(--font-weight-semibold);
+  line-height: 32px;
 }
 
 .savings {
+  margin-bottom: 4px;
   color: var(--color-savings-text);
   font-size: 12px;
   font-weight: var(--font-weight-medium);
-  line-height: 1.3;
+  line-height: 12px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .checkout {
   width: 100%;
   min-height: 48px;
+  margin-bottom: 4px;
   color: #ffffff;
   background: var(--color-primary);
   border: 1px solid var(--color-primary);
@@ -232,23 +291,47 @@
   font-size: 18px;
   font-weight: var(--font-weight-semibold);
   line-height: 24px;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.checkout:hover {
+  background: #3f24ba;
+  box-shadow: 0 10px 22px rgba(78, 47, 210, 0.24);
+  transform: translateY(-1px);
 }
 
 .save {
   padding: 0;
-  color: var(--color-text-heading);
+  margin-bottom: 5px;
+  color: #484848;
   background: transparent;
   border: 0;
   font-size: 14px;
-  font-weight: var(--font-weight-medium);
-  line-height: 17px;
+  font-style: italic;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.016px;
+  line-height: 1.2;
+  text-align: center;
   text-decoration: underline;
 }
 
 .saveMessage {
-  min-height: 16px;
+  min-height: 0;
   color: var(--color-savings-text);
   font-size: 12px;
+  text-align: center;
+}
+
+.checkoutMessage {
+  min-height: 16px;
+  margin-bottom: 2px;
+  color: var(--color-savings-text);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  line-height: 16px;
   text-align: center;
 }
 
@@ -260,6 +343,7 @@
 
 @media (max-width: 960px) {
   .panel {
+    min-height: 0;
     width: 100%;
   }
 
@@ -280,9 +364,11 @@
   .summary {
     align-items: flex-start;
     flex-direction: column;
+    margin-top: 12px;
   }
 
   .totals {
+    align-items: flex-start;
     width: 100%;
   }
 }

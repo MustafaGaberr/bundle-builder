@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { QuantityStepper } from '../QuantityStepper/QuantityStepper'
 import { formatCurrency, formatPrice } from '../../utils/formatCurrency'
 
@@ -27,6 +29,12 @@ export function ReviewPanel({
   onDecrement,
   onSave,
 }: ReviewPanelProps) {
+  const [checkoutMessage, setCheckoutMessage] = useState('')
+
+  const confirmCheckout = (): void => {
+    setCheckoutMessage('Order confirmed. Secure payment is the next step.')
+  }
+
   return (
     <aside className={styles.panel} aria-label="Bundle review">
       <div className={styles.eyebrow}>Review</div>
@@ -73,8 +81,7 @@ export function ReviewPanel({
           />
           <div className={styles.totals}>
             <span className={styles.financing}>{catalog.reviewMetadata.financingLabel}</span>
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>One-time</span>
+            <div className={styles.totalRow} aria-label="One-time total">
               <span className={styles.totalPrices}>
                 <span className={styles.totalCompareAt}>
                   {formatCurrency(totals.oneTimeCompareAtTotalCents)}
@@ -84,31 +91,23 @@ export function ReviewPanel({
                 </span>
               </span>
             </div>
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>Monthly</span>
-              <span className={styles.totalPrices}>
-                <span className={styles.totalCompareAt}>
-                  {formatCurrency(totals.monthlyPlanCompareAtTotalCents)}/mo
-                </span>
-                <span className={styles.totalActive}>
-                  {formatCurrency(totals.monthlyPlanActiveTotalCents)}/mo
-                </span>
-              </span>
-            </div>
           </div>
         </div>
 
         <p className={styles.savings}>
           Congrats! You are saving {formatCurrency(totals.oneTimeSavingsCents)} today and{' '}
-          {formatCurrency(totals.monthlyPlanSavingsCents)}/mo on your plan.
+          {formatCurrency(totals.monthlyPlanSavingsCents)}/mo.
         </p>
 
-        <button className={styles.checkout} type="button">
+        <button className={styles.checkout} type="button" onClick={confirmCheckout}>
           {catalog.reviewMetadata.checkoutLabel}
         </button>
         <button className={styles.save} type="button" onClick={onSave}>
           {catalog.reviewMetadata.saveForLaterLabel}
         </button>
+        <div className={styles.checkoutMessage} role="status" aria-live="polite">
+          {checkoutMessage}
+        </div>
         <div className={styles.saveMessage} role="status" aria-live="polite">
           {saveMessage}
         </div>
@@ -129,6 +128,8 @@ function ReviewSection({ label, lines, onIncrement, onDecrement }: ReviewSection
     return null
   }
 
+  const selectedVariantCountByProduct = getSelectedVariantCountByProduct(lines)
+
   return (
     <section className={styles.reviewSection}>
       <h3>{label}</h3>
@@ -137,6 +138,9 @@ function ReviewSection({ label, lines, onIncrement, onDecrement }: ReviewSection
           <ReviewLineRow
             key={line.id}
             line={line}
+            showVariantLabel={Boolean(
+              line.variantLabel && (selectedVariantCountByProduct[line.sourceItemId] ?? 0) > 1,
+            )}
             onIncrement={onIncrement}
             onDecrement={onDecrement}
           />
@@ -148,11 +152,12 @@ function ReviewSection({ label, lines, onIncrement, onDecrement }: ReviewSection
 
 type ReviewLineRowProps = {
   line: ReviewLine
+  showVariantLabel: boolean
   onIncrement: (selectionKey: string) => void
   onDecrement: (selectionKey: string) => void
 }
 
-function ReviewLineRow({ line, onIncrement, onDecrement }: ReviewLineRowProps) {
+function ReviewLineRow({ line, showVariantLabel, onIncrement, onDecrement }: ReviewLineRowProps) {
   const showQuantityControls = line.categoryId !== 'plan'
   const compareAtPrice = line.compareAtUnitPrice ?? line.activeUnitPrice
   const compareAtLineTotal = compareAtPrice.amountCents * line.quantity
@@ -160,16 +165,19 @@ function ReviewLineRow({ line, onIncrement, onDecrement }: ReviewLineRowProps) {
   const minimumQuantity = line.minimumQuantity ?? 0
   const compareAtLabel = formatLinePrice(compareAtLineTotal, line.activeUnitPrice.billingPeriod)
   const activeLabel = formatLinePrice(activeLineTotal, line.activeUnitPrice.billingPeriod)
+  const quantityControlLabel = line.variantLabel
+    ? `${line.name} ${line.variantLabel} quantity`
+    : `${line.name} quantity`
 
   return (
-    <div className={styles.reviewLine}>
+    <div className={line.categoryId === 'plan' ? `${styles.reviewLine} ${styles.planLine}` : styles.reviewLine}>
       <div className={styles.itemMain}>
-        <div className={styles.thumbnail}>
+        <div className={line.categoryId === 'plan' ? `${styles.thumbnail} ${styles.planThumbnail}` : styles.thumbnail}>
           <img src={line.imageUrl} alt="" />
         </div>
         <div className={styles.itemText}>
           <p>{line.name}</p>
-          {line.variantLabel ? <span>{line.variantLabel}</span> : null}
+          {showVariantLabel ? <span>{line.variantLabel}</span> : null}
           {line.required ? <span>Required</span> : null}
         </div>
       </div>
@@ -180,7 +188,7 @@ function ReviewLineRow({ line, onIncrement, onDecrement }: ReviewLineRowProps) {
           onIncrement={() => onIncrement(line.selectionKey)}
           onDecrement={() => onDecrement(line.selectionKey)}
           decrementDisabled={line.quantity <= minimumQuantity}
-          ariaLabel={`${line.name} quantity`}
+          ariaLabel={quantityControlLabel}
           compact
         />
       ) : null}
@@ -193,6 +201,20 @@ function ReviewLineRow({ line, onIncrement, onDecrement }: ReviewLineRowProps) {
       </div>
     </div>
   )
+}
+
+const getSelectedVariantCountByProduct = (lines: ReviewLine[]): Partial<Record<string, number>> => {
+  const selectedVariantCountByProduct: Partial<Record<string, number>> = {}
+
+  for (const line of lines) {
+    if (!line.variantLabel) {
+      continue
+    }
+
+    selectedVariantCountByProduct[line.sourceItemId] = (selectedVariantCountByProduct[line.sourceItemId] ?? 0) + 1
+  }
+
+  return selectedVariantCountByProduct
 }
 
 function formatLinePrice(amountCents: number, billingPeriod: ReviewLine['activeUnitPrice']['billingPeriod']): string {
@@ -208,7 +230,7 @@ function formatLinePrice(amountCents: number, billingPeriod: ReviewLine['activeU
 function ShippingRow({ shippingOption }: { shippingOption: ShippingOption }) {
   return (
     <section className={styles.reviewSection}>
-      <div className={styles.reviewLine}>
+      <div className={`${styles.reviewLine} ${styles.shippingLine}`}>
         <div className={styles.itemMain}>
           <div className={styles.thumbnail}>
             <img src={shippingOption.iconPath} alt="" />
