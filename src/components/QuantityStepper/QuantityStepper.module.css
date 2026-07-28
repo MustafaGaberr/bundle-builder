@@ -1,0 +1,58 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+  height: 28px;
+  gap: 8px;
+}
+
+.compact {
+  width: 72px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  color: var(--color-text-primary);
+  background: var(--color-control-background);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-control);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+.button:disabled {
+  color: var(--color-text-subtle);
+  background: var(--color-disabled-background);
+  border-color: var(--color-border-default);
+}
+
+.button img {
+  width: 8px;
+  height: 8px;
+}
+
+.button:disabled img {
+  opacity: 0.45;
+}
+
+.quantity {
+  min-width: 10px;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: var(--font-weight-medium);
+  line-height: 20px;
+  text-align: center;
+}
+
+.compact .quantity {
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 16px;
+}
