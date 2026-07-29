@@ -4,6 +4,16 @@
   background: var(--color-page-background);
 }
 
+.title {
+  display: none;
+  margin: 0 auto 32px;
+  color: var(--color-text-heading);
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  text-align: center;
+}
+
 .layout {
   display: grid;
   grid-template-columns: var(--layout-builder-width) var(--layout-review-width);
@@ -28,6 +38,13 @@
     padding: 31px 0 36px;
   }
 
+  .title {
+    display: block;
+    margin-bottom: 22px;
+    font-size: 31.875px;
+    letter-spacing: 0;
+  }
+
   .layout {
     grid-template-columns: 1fr;
     gap: 18px;
@@ -37,7 +54,17 @@
 }
 
 @media (max-width: 420px) {
+  .page {
+    padding: 28px 0 0;
+  }
+
+  .title {
+    margin-bottom: 22px;
+  }
+
   .layout {
+    width: 100%;
     padding-inline: 0;
+    gap: 0;
   }
 }

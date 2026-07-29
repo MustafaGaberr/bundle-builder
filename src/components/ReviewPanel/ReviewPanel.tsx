@@ -64,7 +64,7 @@ export function ReviewPanel({
             onDecrement={onDecrement}
           />
           <ReviewSection
-            label="Plan"
+            label="Home monitoring plan"
             lines={reviewSections.plan}
             onIncrement={onIncrement}
             onDecrement={onDecrement}
@@ -95,8 +95,7 @@ export function ReviewPanel({
         </div>
 
         <p className={styles.savings}>
-          Congrats! You are saving {formatCurrency(totals.oneTimeSavingsCents)} today and{' '}
-          {formatCurrency(totals.monthlyPlanSavingsCents)}/mo.
+          Congrats! You&apos;re saving {formatCurrency(totals.oneTimeSavingsCents)} on your security bundle!
         </p>
 
         <button className={styles.checkout} type="button" onClick={confirmCheckout}>
@@ -176,9 +175,11 @@ function ReviewLineRow({ line, showVariantLabel, onIncrement, onDecrement }: Rev
           <img src={line.imageUrl} alt="" />
         </div>
         <div className={styles.itemText}>
-          <p>{line.name}</p>
+          <p>
+            {line.name}
+            {line.required ? <span className={styles.inlineRequired}> (Required)</span> : null}
+          </p>
           {showVariantLabel ? <span>{line.variantLabel}</span> : null}
-          {line.required ? <span>Required</span> : null}
         </div>
       </div>
 

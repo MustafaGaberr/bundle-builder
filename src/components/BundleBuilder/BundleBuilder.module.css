@@ -193,6 +193,10 @@
 }
 
 @media (max-width: 420px) {
+  .builder {
+    gap: 0;
+  }
+
   .optionCard,
   .summaryRow {
     align-items: flex-start;

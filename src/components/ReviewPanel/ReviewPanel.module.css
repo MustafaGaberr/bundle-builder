@@ -174,6 +174,14 @@
   line-height: 13px;
 }
 
+.itemText .inlineRequired {
+  display: inline;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
 .linePrice {
   display: flex;
   min-width: 49px;
@@ -353,22 +361,140 @@
 }
 
 @media (max-width: 420px) {
+  .panel {
+    width: 100%;
+    background: var(--color-panel-background);
+    border-radius: 0;
+  }
+
+  .eyebrow {
+    height: 32px;
+    padding: 15px 15px 0;
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .inner {
+    padding: 20px 20px 24px;
+  }
+
+  .header {
+    gap: 6px;
+    margin-bottom: 12px;
+    letter-spacing: 0.2px;
+  }
+
+  .header h2 {
+    font-size: 22px;
+    line-height: 24px;
+  }
+
+  .header p {
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  .reviewSection {
+    gap: 8px;
+    padding-top: 13px;
+    padding-bottom: 10px;
+  }
+
+  .reviewSection h3 {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .reviewLines {
+    gap: 10px;
+  }
+
   .reviewLine {
+    grid-template-columns: minmax(0, 1fr) 72px 49px;
+    gap: 9px;
+    min-height: 41px;
+  }
+
+  .planLine,
+  .shippingLine {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .linePrice {
+    grid-column: 3;
+    min-width: 49px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .planLine .linePrice,
+  .shippingLine .linePrice {
     grid-column: 2;
   }
 
+  .itemText p {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .itemText span {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .thumbnail {
+    flex-basis: 41px;
+    width: 41px;
+    height: 41px;
+  }
+
+  .thumbnail img {
+    width: 33px;
+    height: 33px;
+  }
+
   .summary {
+    min-height: 78px;
     align-items: flex-start;
-    flex-direction: column;
-    margin-top: 12px;
+    flex-direction: row;
+    margin-top: 9px;
+    margin-bottom: 14px;
+    padding-top: 9px;
+  }
+
+  .badge {
+    width: 78px;
+    height: 78px;
   }
 
   .totals {
-    align-items: flex-start;
-    width: 100%;
+    align-items: flex-end;
+    width: 145px;
+  }
+
+  .totalCompareAt {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .totalActive {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .savings {
+    margin-bottom: 4px;
+    font-size: 12px;
+    line-height: 12px;
+    white-space: nowrap;
+  }
+
+  .checkout {
+    min-height: 48px;
+    margin-bottom: 4px;
+  }
+
+  .save {
+    font-size: 12px;
   }
 }

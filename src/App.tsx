@@ -9,6 +9,7 @@ function App() {
 
   return (
     <main className={styles.page}>
+      <h1 className={styles.title}>Let&apos;s get started!</h1>
       <div className={styles.layout}>
         <BundleBuilder
           catalog={bundleBuilder.catalog}
